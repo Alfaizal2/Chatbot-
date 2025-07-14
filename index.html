@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI Programming Assistant</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>💡 Ask Programming Questions</h1>
+    <textarea id="userInput" placeholder="Ask any programming concept..."></textarea>
+    <button onclick="getAIResponse()">Get Answer</button>
+    <div id="output"></div>
+  </div>
+
+  <script>
+    async function getAIResponse() {
+      const userInput = document.getElementById("userInput").value;
+      const outputDiv = document.getElementById("output");
+      outputDiv.innerHTML = "Thinking...";
+
+      const url = 'https://chatgpt-42.p.rapidapi.com/aitohuman';
+      const options = {
+        method: 'POST',
+        headers: {
+          'x-rapidapi-key': '4698c70672msh9c88aeae0cdcf4cp12c0e0jsnb157d5b16485',
+          'x-rapidapi-host': 'chatgpt-42.p.rapidapi.com',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ text: userInput })
+      };
+
+      try {
+        const response = await fetch(url, options);
+        const result = await response.text();
+        outputDiv.innerHTML = result;
+      } catch (error) {
+        console.error(error);
+        outputDiv.innerHTML = "❌ Failed to fetch. Run this from a server or host it online.";
+      }
+    }
+  </script>
+</body>
+</html>
